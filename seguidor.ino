@@ -24,7 +24,7 @@ int valorSensorDireita = 0;
 int valorSensorEsquerda = 0;
 
 //Valor médio definido para diferenciar a cor da linha
-int valorMedio = 770;
+int valorMedio = 750;
 
 //Armazena valor da distancia de um obstaculo
 int distancia = 99;
@@ -49,8 +49,8 @@ void setup() {
   Timer1.attachInterrupt(detectarObstaculo);
 }
 void loop() {
-  /*Checa se existe obstaculo a menos de 5 centimetros*/
-  if(distancia<5){
+  /*Checa se existe obstaculo a menos de  5 centimetros*/
+  if(distancia<21){
     /*Encontrou obstaculo*/
     obstaculo = 1;
     /*Para os motores por 10 segundos*/
@@ -67,8 +67,8 @@ void loop() {
      * as rodas giram em sentidos opostos para direcionar o carro para frente
      */
      if((valorSensorDireita>valorMedio)&&(valorSensorEsquerda>valorMedio)){
-       analogWrite (velocidadeMotor1, 255);      
-       analogWrite (velocidadeMotor2, 255); 
+       analogWrite (velocidadeMotor1, 175);      
+       analogWrite (velocidadeMotor2, 175); 
        digitalWrite(motor1,LOW);
        digitalWrite(motor2,HIGH);
      }
@@ -76,8 +76,8 @@ void loop() {
      * as rodas giram em sentidos iguais para realizar uma curva
      */
      if((valorSensorDireita>valorMedio)&&(valorSensorEsquerda<valorMedio)){
-       analogWrite (velocidadeMotor1, 255);      
-       analogWrite (velocidadeMotor2, 255); 
+       analogWrite (velocidadeMotor1, 175);      
+       analogWrite (velocidadeMotor2, 175); 
        digitalWrite(motor1,LOW);
        digitalWrite(motor2,LOW);
      }
@@ -85,8 +85,8 @@ void loop() {
      * as rodas giram em sentidos iguais para realizar uma curva
      */
      if((valorSensorDireita<valorMedio)&&(valorSensorEsquerda>valorMedio)){
-        analogWrite (velocidadeMotor1, 255);      
-        analogWrite (velocidadeMotor2, 255); 
+        analogWrite (velocidadeMotor1, 175);      
+        analogWrite (velocidadeMotor2, 175); 
         digitalWrite(motor1,HIGH);
         digitalWrite(motor2,HIGH);
      }
@@ -98,7 +98,7 @@ void detectarObstaculo(){
     //Contador para controlar o tempo de leitura
     if(contador<=40){
       obstaculo = 1;
-      contador++;
+      contador++; 
       //Apos 10 segundos ele libera distancia para movimentar os motores
       if(contador==20){
         distancia = 99;
@@ -108,7 +108,7 @@ void detectarObstaculo(){
       contador = 0;
       obstaculo = 0;
     }
-  }else{
+  }else{ 
     //Desliga o pino e calcula o tempo de resposta entre pino baixo e alto
     digitalWrite(triggerPino, LOW);
     delayMicroseconds(2);
@@ -119,4 +119,4 @@ void detectarObstaculo(){
     distancia = ultrasonico.Ranging(CM); 
   }
 }
-
+ 
